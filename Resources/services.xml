@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="shyim_cleaner.cleanup_manager" class="ShyimCleaner\Components\CleanupManager">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="shyim_cleaner.processor.basket" class="ShyimCleaner\Components\Processor\BasketProcessor">
+            <tag name="cleanup.processor"/>
+        </service>
+
+        <service id="shyim_cleaner.processor.snippets" class="ShyimCleaner\Components\Processor\ShopProcessor">
+            <tag name="cleanup.processor"/>
+        </service>
+
+        <service id="shyim_cleaner.processor.entries" class="ShyimCleaner\Components\Processor\NotesProcessor">
+            <tag name="cleanup.processor"/>
+        </service>
+
+        <service id="shyim_cleaner.commands.cleanup" class="ShyimCleaner\Commands\CleanupCommand">
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>

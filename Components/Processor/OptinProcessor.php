@@ -2,14 +2,14 @@
 
 namespace FroshCleaner\Components\Processor;
 
-class BasketProcessor extends AbstractProcessor
+class OptinProcessor extends AbstractProcessor
 {
     /**
      * @return string
      */
     public function getName()
     {
-        return 'Cleanup old basket entries';
+        return 'Cleanup optin entries';
     }
 
     /**
@@ -18,6 +18,6 @@ class BasketProcessor extends AbstractProcessor
      */
     public function execute()
     {
-        return $this->connection->executeUpdate('DELETE FROM s_order_basket WHERE datum < DATE_SUB(NOW(), INTERVAL 1 YEAR)');
+        return $this->connection->executeUpdate('DELETE FROM s_core_optin WHERE datum < DATE_SUB(NOW(), INTERVAL 1 MONTH)');
     }
 }

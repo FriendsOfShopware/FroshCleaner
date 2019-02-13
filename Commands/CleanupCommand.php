@@ -1,21 +1,23 @@
 <?php
 
-namespace ShyimCleaner\Commands;
+namespace FroshCleaner\Commands;
 
 use Shopware\Commands\ShopwareCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class CleanupCommand
- * @package ShyimCleaner\Commands
+ * @package FroshCleaner\Commands
  */
 class CleanupCommand extends ShopwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('shyim:cleanup')
+            ->setName('frosh:cleanup')
             ->setDescription('Like CCleaner but for Shopware ♥');
     }
 
@@ -27,6 +29,24 @@ class CleanupCommand extends ShopwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->container->get('shyim_cleaner.cleanup_manager')->run($input, $output);
+        $processors = $this->container->get('shyim_cleaner.cleanup_manager')->getProcessors();
+
+        $progress = new ProgressBar($output, count($processors));
+        $progress->start();
+        $affectedRows = [];
+
+        foreach ($processors as $processor) {
+            $progress->setMessage($processor->getName());
+            $affectedRows[] = [$processor->getName(), $processor->execute()];
+            $progress->advance();
+        }
+
+        $progress->finish();
+        $output->writeln('');
+
+        $table = new Table($output);
+        $table->setHeaders(['Name', 'Affected rows']);
+        $table->setRows($affectedRows);
+        $table->render();
     }
 }

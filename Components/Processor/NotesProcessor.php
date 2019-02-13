@@ -1,17 +1,9 @@
 <?php
 
-namespace ShyimCleaner\Components\Processor;
+namespace FroshCleaner\Components\Processor;
 
-use Symfony\Component\DependencyInjection\ContainerAwareTrait;
-
-/**
- * Class NotesProcessor
- * @package ShyimCleaner\Components\Processor
- */
-class NotesProcessor implements ProcessorInterface
+class NotesProcessor extends AbstractProcessor
 {
-    use ContainerAwareTrait;
-
     /**
      * @return string
      */
@@ -20,14 +12,8 @@ class NotesProcessor implements ProcessorInterface
         return 'Cleanup old notes entries';
     }
 
-    /**
-     * @return int Affected rows
-     * @throws \Doctrine\DBAL\DBALException
-     */
     public function execute()
     {
-        $query = $this->container->get('dbal_connection')->executeQuery('DELETE FROM s_order_notes WHERE datum < DATE_SUB(NOW(), INTERVAL 1 YEAR)');
-        $query->execute();
-        return $query->rowCount();
+        return $this->connection->executeUpdate('DELETE FROM s_order_notes WHERE datum < DATE_SUB(NOW(), INTERVAL 1 YEAR)');
     }
 }

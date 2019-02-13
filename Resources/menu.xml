@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/5.4/engine/Shopware/Components/Plugin/schema/menu.xsd">
+    <entries>
+        <entry>
+            <name>Cleaner</name>
+            <label lang="en">Cleaner</label>
+            <label lang="de">Aufräumen</label>
+            <controller>FroshCleaner</controller>
+            <action>index</action>
+            <class>sprite-metronome</class>
+            <parent identifiedBy="controller">ConfigurationMenu</parent>
+        </entry>
+    </entries>
+</menu>

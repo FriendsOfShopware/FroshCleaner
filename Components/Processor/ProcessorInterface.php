@@ -1,14 +1,12 @@
 <?php
 
-namespace ShyimCleaner\Components\Processor;
-
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+namespace FroshCleaner\Components\Processor;
 
 /**
  * Interface ProcessorInterface
- * @package ShyimCleaner\Components\Processor
+ * @package FroshCleaner\Components\Processor
  */
-interface ProcessorInterface extends ContainerAwareInterface
+interface ProcessorInterface
 {
     /**
      * @return string

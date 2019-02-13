@@ -4,24 +4,55 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="frosh_cleaner.view_dir">%frosh_cleaner.plugin_dir%/Resources/views</parameter>
+    </parameters>
     <services>
-        <service id="shyim_cleaner.cleanup_manager" class="ShyimCleaner\Components\CleanupManager">
-            <argument type="service" id="service_container" />
+        <service id="shyim_cleaner.cleanup_manager" class="FroshCleaner\Components\CleanupManager">
+            <argument type="tagged" tag="cleanup.processor"/>
         </service>
 
-        <service id="shyim_cleaner.processor.basket" class="ShyimCleaner\Components\Processor\BasketProcessor">
+        <service class="FroshCleaner\Components\Processor\BasketProcessor">
+            <argument type="service" id="dbal_connection"/>
             <tag name="cleanup.processor"/>
         </service>
 
-        <service id="shyim_cleaner.processor.snippets" class="ShyimCleaner\Components\Processor\ShopProcessor">
+        <service class="FroshCleaner\Components\Processor\ShopProcessor">
+            <argument type="service" id="dbal_connection"/>
             <tag name="cleanup.processor"/>
         </service>
 
-        <service id="shyim_cleaner.processor.entries" class="ShyimCleaner\Components\Processor\NotesProcessor">
+        <service class="FroshCleaner\Components\Processor\NotesProcessor">
+            <argument type="service" id="dbal_connection"/>
             <tag name="cleanup.processor"/>
         </service>
 
-        <service id="shyim_cleaner.commands.cleanup" class="ShyimCleaner\Commands\CleanupCommand">
+        <service class="FroshCleaner\Components\Processor\LogProcessor">
+            <argument type="service" id="dbal_connection"/>
+            <tag name="cleanup.processor"/>
+        </service>
+
+        <service class="FroshCleaner\Components\Processor\OptinProcessor">
+            <argument type="service" id="dbal_connection"/>
+            <tag name="cleanup.processor"/>
+        </service>
+
+        <service class="FroshCleaner\Components\Processor\PluginCategoriesProcessor">
+            <argument type="service" id="dbal_connection"/>
+            <tag name="cleanup.processor"/>
+        </service>
+
+        <service class="FroshCleaner\Components\Processor\BackendSessionProcessor">
+            <argument type="service" id="dbal_connection"/>
+            <tag name="cleanup.processor"/>
+        </service>
+
+        <service class="FroshCleaner\Components\Processor\ElasticCleanupProcessor">
+            <argument type="service" id="dbal_connection"/>
+            <tag name="cleanup.processor"/>
+        </service>
+
+        <service class="FroshCleaner\Commands\CleanupCommand">
             <tag name="console.command"/>
         </service>
     </services>
